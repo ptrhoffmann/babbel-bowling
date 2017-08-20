@@ -1,4 +1,6 @@
 import React, {PureComponent} from 'react';
+import DevTools from '../../containers/DevTools';
+import './app.scss';
 
 class App extends PureComponent {
 
@@ -6,6 +8,7 @@ class App extends PureComponent {
         return (
             <div className="app">
                 Application
+                {__DEV__ && <DevTools/>}
             </div>
         );
     }
