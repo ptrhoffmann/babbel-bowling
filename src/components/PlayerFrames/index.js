@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
+import Frame from '../Frame';
 import './player-frames.scss';
 
 class PlayerFrames extends PureComponent {
@@ -14,7 +15,11 @@ class PlayerFrames extends PureComponent {
             <div className={`player-frames player-frames${this.props.isActive ? '--active' : ''}`}>
                 {
                     this.props.playerFrames.map((frame, index) => {
-                        return <div key={index}>Frame {frame}</div>
+                        return <Frame
+                            key={index}
+                            frameNumber={index+1}
+                            isActive={this.props.activeFrame === index}
+                            frame={frame}/>
                     })
                 }
             </div>
