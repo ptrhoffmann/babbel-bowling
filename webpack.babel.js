@@ -74,7 +74,7 @@ export default {
         new webpack.NamedModulesPlugin(),
     ] : [
         new CleanPlugin(path.resolve(__dirname, './static/assets')),
-        new ExtractTextPlugin('./static/assets/app.css'),
+        new ExtractTextPlugin('./app.css'),
         new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}, sourceMap: false})
     ])
 };
