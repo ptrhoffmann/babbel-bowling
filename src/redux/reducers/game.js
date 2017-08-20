@@ -33,6 +33,7 @@ export default function reducer(state = initialState, {type, payload}) {
         case Constants.ADD_SCORE: {
             let newState;
 
+            let playersCount = state.get('players').size;
             let activePlayer = state.get('activePlayer');
             let activeFrame = state.get('activeFrame');
             let isLastFrame = activeFrame === 9;
@@ -60,6 +61,11 @@ export default function reducer(state = initialState, {type, payload}) {
                 activeFrame,
                 'activeRoll'
             ], lastRollInFrame ? 0 : activeRoll + 1);
+
+            // set next active frame
+            if (lastRollInFrame && activePlayer === playersCount - 1) {
+                newState = newState.set('activeFrame', activeFrame + 1);
+            }
 
             return newState;
         }
