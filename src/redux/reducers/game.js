@@ -25,15 +25,28 @@ const initialState = fromJS(initialJs);
 
 export default function reducer(state = initialState, {type, payload}) {
 
-    console.log(payload);
-
     switch (type) {
         case Constants.ADD_USER: {
             return state.set('players', state.get('players').push(fromJS(playerScore)));
         }
 
         case Constants.ADD_SCORE: {
-            return state;
+            let newState;
+
+            let activePlayer = state.get('activePlayer');
+            let activeFrame = state.get('activeFrame');
+            let activeRoll = state.getIn(['players', activePlayer, activeFrame, 'activeRoll']);
+
+            //set score for roll
+            newState = state.setIn([
+                'players',
+                activePlayer,
+                activeFrame,
+                'frameScore',
+                activeRoll
+            ], payload.score);
+
+            return newState;
         }
 
         default:
