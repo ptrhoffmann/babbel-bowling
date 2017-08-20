@@ -14,3 +14,9 @@ export const addScore = (score) => dispatch => {
         }
     });
 };
+
+export const resetGame = () => dispatch => {
+    dispatch({
+        type: Constants.RESET_GAME
+    })
+};

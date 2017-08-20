@@ -30,6 +30,10 @@ export default function reducer(state = initialState, {type, payload}) {
             return state.set('players', state.get('players').push(fromJS(playerScore)));
         }
 
+        case Constants.RESET_GAME: {
+            return initialState;
+        }
+
         case Constants.ADD_SCORE: {
             let newState;
 
