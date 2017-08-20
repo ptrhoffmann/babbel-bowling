@@ -29,7 +29,7 @@ export default function reducer(state = initialState, {type, payload}) {
 
     switch (type) {
         case Constants.ADD_USER: {
-            return state;
+            return state.set('players', state.get('players').push(fromJS(playerScore)));
         }
 
         case Constants.ADD_SCORE: {
