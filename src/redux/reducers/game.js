@@ -41,6 +41,13 @@ export default function reducer(state = initialState, {type, payload}) {
             let activePlayer = state.get('activePlayer');
             let activeFrame = state.get('activeFrame');
             let isLastFrame = activeFrame === 9;
+            let hasStrikeFrame = activeFrame > 0
+                && state.getIn(['players', activePlayer, activeFrame-1, 'frameScore', 0]) === 10;
+            let hasDoubleStrike = activeFrame > 1
+                && hasStrikeFrame && state.getIn(['players', activePlayer, activeFrame-2, 'frameScore', 0]) === 10;
+            let hasSpareFrame = activeFrame > 0
+                && state.getIn(['players', activePlayer, activeFrame-1, 'frameScore', 0]) !== 10
+                && state.getIn(['players', activePlayer, activeFrame-1, 'result']) === 10;
             let activeRoll = state.getIn(['players', activePlayer, activeFrame, 'activeRoll']);
             let frameRollsCount = state.getIn(['players', activePlayer, activeFrame, 'frameScore']).size;
             let lastRollInFrame = (
@@ -65,6 +72,35 @@ export default function reducer(state = initialState, {type, payload}) {
                 activeFrame,
                 'result'
             ], result => result + payload.score);
+
+            // check on spare
+            if (hasSpareFrame && activeRoll === 0) {
+                newState = newState.updateIn([
+                    'players',
+                    activePlayer,
+                    activeFrame - 1,
+                    'result'
+                ], result => result + payload.score);
+            }
+
+            // check on strike
+            if (hasStrikeFrame && activeRoll <= 1) {
+                newState = newState.updateIn([
+                    'players',
+                    activePlayer,
+                    activeFrame - 1,
+                    'result'
+                ], result => result + payload.score);
+            }
+
+            if (hasDoubleStrike && activeRoll === 0) {
+                newState = newState.updateIn([
+                    'players',
+                    activePlayer,
+                    activeFrame - 2,
+                    'result'
+                ], result => result + payload.score);
+            }
 
             // set next roll active
             newState = newState.setIn([
