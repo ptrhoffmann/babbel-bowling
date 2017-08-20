@@ -4,6 +4,7 @@ import './controlbar.scss';
 
 class ControlBar extends PureComponent {
     static propTypes = {
+        maxPins: PropTypes.number.isRequired,
         addUser: PropTypes.func.isRequired,
         addScore: PropTypes.func.isRequired
     };
@@ -28,8 +29,8 @@ class ControlBar extends PureComponent {
             value = Math.floor(Math.random() * (this.props.maxPins + 1));
         } else if (value < 0) {
             value = 0;
-        } else if (value > 10) {
-            value = 10;
+        } else if (value > this.props.maxPins) {
+            value = this.props.maxPins;
         }
 
         this.props.addScore(value);
