@@ -31,7 +31,7 @@ export default function reducer(state = initialState, {type, payload}) {
         }
 
         case Constants.RESET_GAME: {
-            return initialState;
+            return fromJS(initialJs);
         }
 
         case Constants.ADD_SCORE: {
@@ -53,7 +53,7 @@ export default function reducer(state = initialState, {type, payload}) {
             let lastRollInFrame = (
                 activeRoll === frameRollsCount - 1 ||
                 (!isLastFrame && payload.score === 10) ||
-                (isLastFrame && payload.score !== 10)
+                (isLastFrame && activeRoll === 1 && state.getIn(['players', activePlayer, activeFrame, 'result']) + payload.score < 10)
             );
 
             //set score for roll
