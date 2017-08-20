@@ -21,7 +21,7 @@ class ControlBarContainer extends Component {
     static propTypes = {
         activeFrame: PropTypes.object,
         addUser: PropTypes.func.isRequired,
-        addScore: PropTypes.func.isRequired
+        addScore: PropTypes.func.isRequired,
         resetGame: PropTypes.func.isRequired
     };
 
