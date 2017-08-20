@@ -35,7 +35,14 @@ export default function reducer(state = initialState, {type, payload}) {
 
             let activePlayer = state.get('activePlayer');
             let activeFrame = state.get('activeFrame');
+            let isLastFrame = activeFrame === 9;
             let activeRoll = state.getIn(['players', activePlayer, activeFrame, 'activeRoll']);
+            let frameRollsCount = state.getIn(['players', activePlayer, activeFrame, 'frameScore']).size;
+            let lastRollInFrame = (
+                activeRoll === frameRollsCount - 1 ||
+                (!isLastFrame && payload.score === 10) ||
+                (isLastFrame && payload.score !== 10)
+            );
 
             //set score for roll
             newState = state.setIn([
@@ -45,6 +52,14 @@ export default function reducer(state = initialState, {type, payload}) {
                 'frameScore',
                 activeRoll
             ], payload.score);
+
+            // set next roll active
+            newState = newState.setIn([
+                'players',
+                activePlayer,
+                activeFrame,
+                'activeRoll'
+            ], lastRollInFrame ? 0 : activeRoll + 1);
 
             return newState;
         }
