@@ -1,0 +1,24 @@
+{
+  "name": "babbel-bowling2",
+  "version": "1.0.0",
+  "description": "Babbel coding challenge",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ptrhoffmann/babbel-bowling.git"
+  },
+  "keywords": [
+    "node",
+    "ecma2015",
+    "sass"
+  ],
+  "author": "Peter Hoffmann",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/ptrhoffmann/babbel-bowling/issues"
+  },
+  "homepage": "https://github.com/ptrhoffmann/babbel-bowling#readme"
+}
