@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import Frame from '../Frame';
+import Sum from '../Sum';
 import './player-frames.scss';
 
 class PlayerFrames extends PureComponent {
@@ -22,6 +23,7 @@ class PlayerFrames extends PureComponent {
                             frame={frame}/>
                     })
                 }
+                <Sum frames={this.props.playerFrames}/>
             </div>
         )
     }
