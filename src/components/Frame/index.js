@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import Roll from '../Roll';
+import FrameResult from '../FrameResult';
 import './frame.scss';
 
 class Frame extends PureComponent {
@@ -30,6 +31,7 @@ class Frame extends PureComponent {
                         })
                     }
                 </div>
+                <FrameResult result={this.props.frame.result} />
             </div>
         );
     }
