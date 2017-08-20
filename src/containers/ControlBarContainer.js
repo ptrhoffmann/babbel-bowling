@@ -13,7 +13,8 @@ import * as GameActions from '../redux/actions/game';
     }),
     dispatch => ({
         addUser: bindActionCreators(GameActions.addUser, dispatch),
-        addScore: bindActionCreators(GameActions.addScore, dispatch)
+        addScore: bindActionCreators(GameActions.addScore, dispatch),
+        resetGame: bindActionCreators(GameActions.resetGame, dispatch)
     })
 )
 class ControlBarContainer extends Component {
@@ -21,20 +22,40 @@ class ControlBarContainer extends Component {
         activeFrame: PropTypes.object,
         addUser: PropTypes.func.isRequired,
         addScore: PropTypes.func.isRequired
+        resetGame: PropTypes.func.isRequired
     };
 
     constructor(props) {
         super(props);
 
         this.state = {
-            maxPins: 10
+            maxPins: 10,
+            finished: false
         };
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.activeFrame.get('activeRoll') > 0) {
+        if (nextProps.activeFrame) {
+            if (nextProps.activeFrame.get('activeRoll') > 0) {
+                let pinsRemained = 10 - nextProps.activeFrame.get('result');
+
+                // supporting last frame
+                if(nextProps.activeFrame.get('frameScore').size === 3) {
+                    pinsRemained = nextProps.activeFrame.getIn(['frameScore',0]) === 10 ||
+                    nextProps.activeFrame.getIn(['frameScore',1]) === 10 ? 10 : pinsRemained;
+                }
+
+                this.setState({
+                    maxPins: pinsRemained
+                });
+            } else {
+                this.setState({
+                    finished: false
+                })
+            }
+        } else {
             this.setState({
-                maxPins: 10 - nextProps.activeFrame.get('result');
+                finished: true
             });
         }
     }
@@ -44,7 +65,9 @@ class ControlBarContainer extends Component {
             <ControlBar
                 addUser={this.props.addUser}
                 addScore={this.props.addScore}
+                resetGame={this.props.resetGame}
                 maxPins={this.state.maxPins}
+                finished={this.state.finished}
             />
         );
     }
