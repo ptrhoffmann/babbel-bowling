@@ -54,6 +54,14 @@ export default function reducer(state = initialState, {type, payload}) {
                 activeRoll
             ], payload.score);
 
+            // update frame result
+            newState = newState.updateIn([
+                'players',
+                activePlayer,
+                activeFrame,
+                'result'
+            ], result => result + payload.score);
+
             // set next roll active
             newState = newState.setIn([
                 'players',
