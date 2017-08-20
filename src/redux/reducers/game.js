@@ -74,6 +74,14 @@ export default function reducer(state = initialState, {type, payload}) {
                 'activeRoll'
             ], lastRollInFrame ? 0 : activeRoll + 1);
 
+            // switch players
+            if (playersCount > 0 && lastRollInFrame) {
+                newState = newState.set(
+                    'activePlayer',
+                    activePlayer === playersCount - 1 ? 0 : activePlayer + 1
+                );
+            }
+
             // set next active frame
             if (lastRollInFrame && activePlayer === playersCount - 1) {
                 newState = newState.set('activeFrame', activeFrame + 1);
