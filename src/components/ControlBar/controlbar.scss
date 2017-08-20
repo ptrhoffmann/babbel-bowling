@@ -1,0 +1,10 @@
+@import '../../styles/colors';
+@import '../../styles/sizes';
+
+.controlbar {
+  background-color: $color-light-blue;
+  border: 1px solid $color-blue;
+  font-size: $size-font-normal;
+  height: 4rem;
+  position: relative;
+}
